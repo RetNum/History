@@ -1,0 +1,14 @@
+torch==2.0.0
+torchvision
+torchaudio
+--index-url https://download.pytorch.org/whl/cu118
+torch_scatter
+torch_sparse
+torch_cluster
+torch_spline_conv
+-f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+torch-geometric==2.3.0
+torchmetrics
+ogb
+rdkit
+matplotlib
