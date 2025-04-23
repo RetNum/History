@@ -32,7 +32,7 @@ class CoGNN(Module):
         self.drop_ratio = env_args.dropout
         self.act = env_args.act_type.get()
 
-        self.history_dim = min(2, self.num_layers) * 4  # 只保留最近4层或更少的历史
+        self.history_dim = 4
         self.in_act_net = ActionNet(action_args=action_args,history_dim=self.history_dim)
         self.out_act_net = ActionNet(action_args=action_args,history_dim=self.history_dim)
 
