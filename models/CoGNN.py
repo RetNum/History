@@ -136,9 +136,16 @@ class CoGNN(Module):
 
             #############################################
             # 当前层的历史信息切片
+
             current_history = action_history.clone() if action_history is not None else torch.zeros(num_nodes,
                                                                                                    self.history_dim,
                                                                                                     device=x.device)
+            if current_history.size(1) > self.history_dim:
+                current_history = current_history[:, -self.history_dim:]
+            elif current_history.size(1) < self.history_dim:
+                # 如果历史太短，用零填充
+                padding = torch.zeros(num_nodes, self.history_dim - current_history.size(1), device=x.device)
+                current_history = torch.cat([padding, current_history], dim=1)
 
 
             # action
