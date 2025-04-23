@@ -20,7 +20,7 @@ class ActionNet(nn.Module):
 
         if history_dim is not None:
             self.use_history = True
-            self.condition_net = nn.Linear(history_dim, action_args.hidden_dim * 2)
+            self.condition_net = nn.Linear(history_dim, action_args.env_dim * 2)
         else:
             self.use_history = False
 

@@ -32,9 +32,9 @@ class CoGNN(Module):
         self.drop_ratio = env_args.dropout
         self.act = env_args.act_type.get()
 
-        history_dim = min(4, self.num_layers) * 4  # 只保留最近4层或更少的历史
-        self.in_act_net = ActionNet(action_args=action_args,history_dim=history_dim)
-        self.out_act_net = ActionNet(action_args=action_args,history_dim=history_dim)
+        self.history_dim = min(4, self.num_layers) * 4  # 只保留最近4层或更少的历史
+        self.in_act_net = ActionNet(action_args=action_args,history_dim=self.history_dim)
+        self.out_act_net = ActionNet(action_args=action_args,history_dim=self.history_dim)
 
         # Encoder types
         self.dataset_encoder = env_args.dataset_encoders
@@ -136,7 +136,9 @@ class CoGNN(Module):
 
             #############################################
             # 当前层的历史信息切片
-            current_history = self.action_history.clone()
+            current_history = action_history.clone() if action_history is not None else torch.zeros(num_nodes,
+                                                                                                   self.history_dim,
+                                                                                                    device=x.device)
 
 
             # action
